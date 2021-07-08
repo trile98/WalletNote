@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="history_addnew_type_income_and_outgo_btn_content">Thu &amp; Chi</string>
+    <string name="history_addnew_type_income_btn_content">Thu &amp; Chi</string>
+    <string name="history_addnew_type_outgo_btn_content">Thu &amp; Chi</string>
+    <string name="history_normal_btn_content">Thu &amp; Chi</string>
+    <string name="history_period_btn_content">Thu &amp; Chi</string>
+
+    <string name="history_task_fab_checkall_content">Chọn Hết</string>
+    <string name="history_task_fab_uncheckall_content">Bỏ Chọn Hết</string>
+    <string name="history_task_fab_delete_content">Xoá</string>
+    <string name="history_task_fab_total_content">Tổng</string>
+    <string name="history_task_fab_cancel_content">Huỷ</string>
+
+    <string name="history_empty_total_warning_dialog_message">Hãy chọn ít nhất hai dòng trong danh sách để tính tổng!</string>
+    <string name="history_empty_delete_warning_dialog_message">Hãy chọn ít nhất một dòng trong danh sách để xoá!</string>
+
+    <string name="history_delete_successfully_message">Xoá thành công %1$d dòng</string>
+
+</resources>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.history.HistoryFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/history_layout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/history_taskbar_background"
+            android:layout_marginHorizontal="20dp"
+            android:gravity="center_horizontal"
+            android:id="@+id/history_taskbar_background"
+            android:layout_alignParentTop="true"
+            >
+
+
+            <ImageButton
+                android:id="@+id/history_taskbar_filter_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:backgroundTint="@android:color/transparent"
+                android:src="@drawable/history_filter_btn" />
+
+            <EditText
+                android:id="@+id/history_taskbar_edittext"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:hint="tìm kiếm"
+                android:background="@android:color/transparent"/>
+
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/history_taskbar_search_btn"
+                android:src="@drawable/history_search_btn"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_gravity="start"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/history_period_button_layout"
+            android:background="@drawable/history_button_right_background"
+            android:paddingHorizontal="30dp"
+            android:layout_marginVertical="10dp"
+            android:paddingVertical="5dp"
+            android:gravity="center_horizontal"
+            android:layout_below="@id/history_taskbar_background"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            >
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/history_period_btn"
+                android:background="@drawable/history_period_button"
+                android:textColor="@color/appThemeColor"
+                android:paddingHorizontal="5dp"
+                android:text="dinh ky"
+                android:layout_marginHorizontal="10dp"
+                />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/history_normal_btn"
+                android:background="@drawable/history_period_button"
+                android:textColor="@color/appThemeColor"
+                android:paddingHorizontal="5dp"
+                android:text="binh thuong"
+                android:layout_marginHorizontal="10dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/history_financial_type_button_layout"
+            android:background="@drawable/history_button_left_background"
+            android:gravity="center"
+            android:paddingVertical="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/history_period_button_layout"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            >
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/history_all_btn"
+                android:background="@drawable/history_period_button"
+                android:textColor="@color/appThemeColor"
+                android:paddingHorizontal="5dp"
+                android:text="@string/history_addnew_type_income_and_outgo_btn_content"
+                android:layout_marginHorizontal="10dp"
+                />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/history_incoming_btn"
+                android:background="@drawable/history_period_button"
+                android:textColor="@color/appThemeColor"
+                android:paddingHorizontal="5dp"
+                android:text="thu nhap"
+                android:layout_marginHorizontal="10dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/history_outgoing_btn"
+                android:background="@drawable/history_period_button"
+                android:textColor="@color/appThemeColor"
+                android:paddingHorizontal="5dp"
+                android:text="chi tieu"
+                android:layout_marginHorizontal="10dp"
+                />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/history_filter_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_weight="9"
+            android:layout_below="@+id/history_financial_type_button_layout"
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@id/history_filter_text_view"
+            >
+
+            <ListView
+                android:id="@+id/history_listview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@drawable/shadow_listviewitem_background"
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/history_checkboxBtn"
+        android:layout_marginLeft="30px"
+        android:layout_marginBottom="10px"
+        android:src="@drawable/ic_history_select"
+        app:layout_anchor="@id/history_layout"
+        app:layout_anchorGravity="bottom|left|end"
+        app:maxImageSize="35dp"
+        app:tint="@color/white"
+        android:backgroundTint="@color/appThemeColor"
+        android:contentDescription="taskForChecked">
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/history_taskBtn"
+        android:layout_marginLeft="30px"
+        android:layout_marginBottom="10px"
+        app:layout_anchor="@id/history_layout"
+        app:layout_anchorGravity="bottom|left|end"
+        android:src="@drawable/ic_history_menu"
+        android:backgroundTint="@color/appThemeColor"
+        app:tint="@color/white"
+        app:maxImageSize="35dp"
+        android:visibility="invisible"
+        android:contentDescription="checkOn">
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

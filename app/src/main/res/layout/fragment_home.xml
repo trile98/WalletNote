@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#d3d3d3"
+        >
+
+        <LinearLayout
+            android:id="@+id/home_blue_background_lay"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@drawable/home_blue_background"/>
+        <LinearLayout
+            android:id="@+id/home_grey_background_lay"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@color/appThemeGrayColor"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingEnd="20dp"
+                android:layout_weight="10">
+
+<!--                <ImageView-->
+<!--                    android:layout_width="50dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:src="@drawable/purse"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginVertical="20dp"/>-->
+
+                <TextView
+                    android:id="@+id/balance_title_home"
+                    android:layout_weight="9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textAlignment="gravity"
+                    android:text="2000000"
+                    android:textColor="@color/white"
+                    android:textSize="75px"
+                    android:textStyle="bold"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="5dp"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:weightSum="10">
+
+                <LinearLayout
+                    android:id="@+id/home_periodic_incoming_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/home_periodic_btn_background"
+                    android:padding="20px"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:layout_marginRight="30dp"
+                    android:layout_weight="3">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="THU NHAP"
+                            android:textColor="#4caf50"
+                            android:textStyle="bold"
+                            android:textAlignment="center"
+                            />
+
+                        <TextView
+                            android:id="@+id/home_periodic_incoming_total_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="200000"
+                            android:textColor="#4caf50"
+                            android:textStyle="bold"
+                            android:textAlignment="center"
+                            />
+
+                    </LinearLayout>
+
+
+                    <ImageButton
+                        android:id="@+id/home_periodic_incoming_info_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_information_incoming"
+                        android:background="@android:color/transparent"
+                        android:layout_marginHorizontal="10dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/home_periodic_outgoing_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/home_periodic_btn_background"
+                    android:padding="20px"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:layout_weight="3"
+                    android:layout_marginLeft="15dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:textAlignment="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="CHI TIEU"
+                            android:textColor="#F80000"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/home_periodic_outgoing_total_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="2000"
+                            android:textAlignment="center"
+                            android:textColor="#F80000"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
+                    <ImageButton
+                        android:id="@+id/home_periodic_outgoing_info_btn"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_information_outgoing"
+                        android:background="@android:color/transparent"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/home_history_layout"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_weight="3"
+            android:background="@drawable/home_history_background"
+            android:orientation="vertical"
+            android:padding="10dp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gan Day"
+                    android:textSize="50px"
+                    android:textColor="@color/black"
+                    android:layout_weight="9"/>
+
+                <ImageButton
+                    android:id="@+id/home_history_direct_img_btn"
+                    android:layout_weight="1"
+                    android:layout_gravity="end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/home_history_direct_img"
+                    android:background="@android:color/transparent"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ListView
+                    android:id="@+id/home_recent_history_listview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@drawable/shadow_listviewitem_background"
+                    >
+
+                </ListView>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

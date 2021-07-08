@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.addnew.AddNewFragment">
+
+    <Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="#1fcecb"
+        android:popupTheme="@android:style/Theme.Holo.Light"
+        android:id="@+id/addNew_toolbar_popup"
+        android:titleTextColor="@color/white"
+        android:navigationIcon="@drawable/ic_arrow_back_white"
+        />
+
+    <ListView
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:id="@+id/addNew_listview"></ListView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addNew_addBtn"
+        android:layout_margin="60px"
+        android:src="@drawable/ic_addnew_add"
+        app:layout_anchor="@id/addNew_listview"
+        app:layout_anchorGravity="bottom|right|end"
+        app:maxImageSize="35dp"
+        app:tint="@color/white"
+        android:backgroundTint="#1fcecb">
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addNew_removeBtn"
+        android:layout_margin="60px"
+        app:layout_anchor="@id/addNew_listview"
+        app:layout_anchorGravity="bottom|right|end"
+        android:src="@drawable/ic_addnew_delete"
+        android:backgroundTint="#F80000"
+        app:tint="@color/white"
+        app:maxImageSize="35dp"
+        android:visibility="invisible">
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

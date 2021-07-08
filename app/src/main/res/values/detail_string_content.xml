@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_toolbar_title">Chi Tiết</string>
+
+    <string name="update_btn">Sửa</string>
+    <string name="delete_btn">Xoá</string>
+    <string name="finish_btn">Hoàn Tất</string>
+    <string name="cancel_btn">Huỷ</string>
+    <string name="radio_income">Thu Nhập</string>
+    <string name="radio_outgo">Chi Tiêu</string>
+
+</resources>

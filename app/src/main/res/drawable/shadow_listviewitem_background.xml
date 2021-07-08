@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">-->
+<!--&lt;!&ndash;<item android:top="10dp" android:left="10dp">&ndash;&gt;-->
+<!--&lt;!&ndash;    <shape&ndash;&gt;-->
+<!--&lt;!&ndash;        android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">&ndash;&gt;-->
+<!--&lt;!&ndash;        <solid android:color="#696969"/>&ndash;&gt;-->
+<!--&lt;!&ndash;    </shape>&ndash;&gt;-->
+<!--&lt;!&ndash;</item>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <item android:right="10dp" android:bottom="10dp">&ndash;&gt;-->
+<!--&lt;!&ndash;        <shape&ndash;&gt;-->
+<!--&lt;!&ndash;            android:shape="rectangle"  xmlns:android="http://schemas.android.com/apk/res/android">&ndash;&gt;-->
+<!--&lt;!&ndash;            <solid android:color="@color/white"/>&ndash;&gt;-->
+<!--&lt;!&ndash;            <stroke android:color="@color/black" android:width="3dp"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </shape>&ndash;&gt;-->
+<!--&lt;!&ndash;    </item>&ndash;&gt;-->
+
+<!--    <item android:drawable="@drawable/shadow_listview"/>-->
+
+<!--</layer-list>-->
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- Drop Shadow Stack -->
+    <item>
+        <shape>
+            <padding
+                android:bottom="3dp"
+                android:left="3dp"
+                android:right="3dp"
+                android:top="3dp" />
+
+            <solid android:color="#00CCCCCC" />
+
+            <corners android:radius="3dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="3dp"
+                android:left="3dp"
+                android:right="3dp"
+                android:top="3dp" />
+
+            <solid android:color="#10CCCCCC" />
+
+            <corners android:radius="3dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="3dp"
+                android:left="3dp"
+                android:right="3dp"
+                android:top="3dp" />
+
+            <solid android:color="#20CCCCCC" />
+
+            <corners android:radius="3dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="3dp"
+                android:left="3dp"
+                android:right="3dp"
+                android:top="3dp" />
+
+            <solid android:color="#30CCCCCC" />
+
+            <corners android:radius="3dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="3dp"
+                android:left="3dp"
+                android:right="3dp"
+                android:top="3dp" />
+
+            <solid android:color="#50CCCCCC" />
+
+            <corners android:radius="3dp" />
+        </shape>
+    </item>
+
+    <!-- Background -->
+    <item>
+        <shape>
+            <solid android:color="@android:color/white" />
+
+            <corners android:radius="3dp" />
+        </shape>
+    </item>
+
+</layer-list>

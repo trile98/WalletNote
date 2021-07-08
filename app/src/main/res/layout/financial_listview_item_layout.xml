@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/financial_item_layout"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:paddingHorizontal="10dp">
+
+            <TextView
+                android:id="@+id/listview_item_reason_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="reason"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="9"/>
+
+            <ImageButton
+                android:id="@+id/listview_item_info_btn"
+                android:layout_marginHorizontal="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/ic_info_listview"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="10dp"
+            android:weightSum="10">
+
+            <ImageView
+                android:id="@+id/listview_item_catalog_img"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="2"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="8">
+
+                <TextView
+                    android:id="@+id/listview_item_date_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAlignment="viewEnd"
+                    android:padding="5dp"
+                    android:textSize="16dp"
+                    android:textColor="@color/black"
+                    android:text="date"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/listview_item_detail_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:textAlignment="viewStart"
+                        android:textStyle="italic"
+                        android:paddingHorizontal="5dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/listview_item_amount_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:text="amount"
+                        android:textAlignment="viewEnd"
+                        />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/financial_listview_item_check_layout"
+        android:paddingTop="5dp"
+        android:visibility="invisible"
+        android:clickable="true">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:button="@drawable/custom_checkbox"
+            android:id="@+id/financial_listview_item_checkbox"
+            android:gravity="top"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

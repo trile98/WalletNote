@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+        <item android:id="@+id/history_task_fab_menu_Total"
+            android:title="@string/history_task_fab_total_content"
+            app:showAsAction="always"
+            android:orderInCategory="1" />
+
+        <item android:id="@+id/history_task_fab_menu_Delete"
+            android:title="@string/history_task_fab_delete_content"
+            app:showAsAction="always"
+            android:orderInCategory="2" />
+
+        <item android:id="@+id/history_task_fab_menu_CheckAll"
+            android:title="@string/history_task_fab_checkall_content"
+            app:showAsAction="always"
+            android:orderInCategory="3"/>
+
+        <item android:id="@+id/history_task_fab_menu_Cancel"
+            android:title="@string/history_task_fab_cancel_content"
+            app:showAsAction="always"
+            android:orderInCategory="4" />
+
+</menu>

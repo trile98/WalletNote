@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="custom_dialog_accept_btn">Đồng Ý</string>
+    <string name="custom_dialog_close_btn">Đóng</string>
+    <string name="custom_dialog_cancel_btn">Huỷ</string>
+
+    <string name="custom_dialog_warning_title">Cảnh Báo</string>
+    <string name="custom_dialog_total_title">Tổng</string>
+
+    <string name="custom_delete_dialog_title">Xoá Thông Tin</string>
+    <string name="custom_delete_dialog_message">Bạn có chắc chắn muốn xoá thông tin này?</string>
+    <string name="custom_delete_dialog_delete_btn">Xoá</string>
+    <string name="custom_delete_dialog_cancel_btn">Huỷ</string>
+
+    <string name="update_fail">Cập Nhật Thất Bại</string>
+
+    <string name="delete_fail">Xoá Thất Bại</string>
+
+    <string name="custom_save_success_dialog_save_title">Lưu Thành Công</string>
+    <string name="custom_save_success_dialog_save_content">Bạn đã lưu thành công thông tin này!</string>
+
+    <string name="custom_save_success_dialog_update_title">Cập Nhật Thành Công</string>
+    <string name="custom_save_success_dialog_update_content">Bạn đã cập nhật thành công thông tin này!</string>
+
+    <string name="custom_save_success_dialog_delete_title">Xoá Thành Công</string>
+    <string name="custom_save_success_dialog_delete_content">Bạn đã xoá thành công thông tin này!</string>
+
+    <string name="month_year_picker_title">Tháng %1$d Năm %2$d</string>
+    <string name="month_year_picker_delete_filter">Xoá Bộ Lọc</string>
+
+    <string name="back_button_for_exit_content">Bấm lần nữa để thoát</string>
+
+</resources>

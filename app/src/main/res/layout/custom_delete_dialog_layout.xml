@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/custom_delete_dialog_title"
+        android:textSize="25dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_marginBottom="10dp"
+        android:background="@color/appThemeRedColor"
+        android:padding="20dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/custom_delete_dialog_content"
+        android:scrollbars="vertical"
+        android:layout_marginVertical="10dp"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:padding="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/custom_delete_dialog_delete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/appThemeRedColor"
+            android:background="@drawable/dialog_red_btn_bg"
+            android:layout_marginHorizontal="40dp"
+            android:text="@string/delete_btn"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/custom_delete_dialog_cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray"
+            android:background="@drawable/dialog_gray_btn_bg"
+            android:text="@string/cancel_btn"
+            android:layout_marginHorizontal="40dp"
+            />
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

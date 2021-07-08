@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_new_action_bar_title_income">Thêm thu Nhập Mới</string>
+    <string name="add_new_action_bar_title_outgo">Thêm Chi Tiêu Mới</string>
+
+    <string name="saveSuccess">Lưu thành công</string>
+    <string name="saveFail">Lưu thất bại</string>
+
+    <string name="save_fail_temporature">Quá trình lưu gặp lỗi, đã lưu được %1$d thông tin</string>
+</resources>
