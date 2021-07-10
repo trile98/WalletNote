@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="history_search_txt_hint_content">Tìm Kiếm</string>
 
     <string name="history_addnew_type_income_and_outgo_btn_content">Thu &amp; Chi</string>
-    <string name="history_addnew_type_income_btn_content">Thu &amp; Chi</string>
-    <string name="history_addnew_type_outgo_btn_content">Thu &amp; Chi</string>
-    <string name="history_normal_btn_content">Thu &amp; Chi</string>
-    <string name="history_period_btn_content">Thu &amp; Chi</string>
+    <string name="history_addnew_type_income_btn_content">Thu Nhập</string>
+    <string name="history_addnew_type_outgo_btn_content">Chi Tiêu</string>
+    <string name="history_normal_btn_content">Bình Thường</string>
+    <string name="history_period_btn_content">Định Kỳ</string>
 
     <string name="history_task_fab_checkall_content">Chọn Hết</string>
     <string name="history_task_fab_uncheckall_content">Bỏ Chọn Hết</string>

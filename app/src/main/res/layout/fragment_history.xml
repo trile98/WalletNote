@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:layout_gravity="center"
-                android:hint="tìm kiếm"
+                android:hint="@string/history_search_txt_hint_content"
                 android:background="@android:color/transparent"/>
 
 
@@ -75,7 +75,7 @@
                 android:background="@drawable/history_period_button"
                 android:textColor="@color/appThemeColor"
                 android:paddingHorizontal="5dp"
-                android:text="dinh ky"
+                android:text="@string/history_period_btn_content"
                 android:layout_marginHorizontal="10dp"
                 />
 
@@ -87,7 +87,7 @@
                 android:background="@drawable/history_period_button"
                 android:textColor="@color/appThemeColor"
                 android:paddingHorizontal="5dp"
-                android:text="binh thuong"
+                android:text="@string/history_normal_btn_content"
                 android:layout_marginHorizontal="10dp"
                 />
         </LinearLayout>
@@ -125,7 +125,7 @@
                 android:background="@drawable/history_period_button"
                 android:textColor="@color/appThemeColor"
                 android:paddingHorizontal="5dp"
-                android:text="thu nhap"
+                android:text="@string/history_addnew_type_income_btn_content"
                 android:layout_marginHorizontal="10dp"
                 />
 
@@ -136,7 +136,7 @@
                 android:background="@drawable/history_period_button"
                 android:textColor="@color/appThemeColor"
                 android:paddingHorizontal="5dp"
-                android:text="chi tieu"
+                android:text="@string/history_addnew_type_outgo_btn_content"
                 android:layout_marginHorizontal="10dp"
                 />
 
