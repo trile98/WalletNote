@@ -542,21 +542,25 @@ public class HistoryFragment extends Fragment{
         if(DurationType == 1){
             normalBtn.setTextColor(Color.WHITE);
             normalBtn.setSelected(true);
+            historyFragmentService.clickPeriodBtns(1);
 
             if(FinType == 1){
                 allBtn.setTextColor(Color.WHITE);
                 allBtn.setSelected(true);
+                historyFragmentService.clickFinTypeBtns(1);
             }
 
         }else{
             periodBtn.setTextColor(Color.WHITE);
             periodBtn.setSelected(true);
+            historyFragmentService.clickPeriodBtns(2);
 
             allBtn.setEnabled(false);
 
             if(FinType == 1){
                 incomingBtn.setTextColor(Color.WHITE);
                 incomingBtn.setSelected(true);
+                historyFragmentService.clickFinTypeBtns(2);
             }
 
         }
@@ -564,10 +568,12 @@ public class HistoryFragment extends Fragment{
         if (FinType == 2){
             incomingBtn.setTextColor(Color.WHITE);
             incomingBtn.setSelected(true);
+            historyFragmentService.clickFinTypeBtns(2);
         }
         if(FinType == 3){
             outgoingBtn.setTextColor(Color.WHITE);
             outgoingBtn.setSelected(true);
+            historyFragmentService.clickFinTypeBtns(3);
         }
         FinList.clear();
         FinList.addAll(historyFragmentService.getListHistoryFinancialInformation(filterChosenMonth,filterChosenYear, contentForSearch));
