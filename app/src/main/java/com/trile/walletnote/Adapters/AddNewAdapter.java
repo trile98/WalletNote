@@ -363,20 +363,10 @@ public class AddNewAdapter extends BaseAdapter {
             }
         });
 
-        holder.detailEditTxt.addTextChangedListener(new TextWatcher() {
+        holder.detailEditTxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(pos<FinList.size()) {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
                     String text = holder.detailEditTxt.getText().toString();
                     FinList.get(pos).getDetail().setFinDetContent(text);
                     updateCheckLayoutHeight(holder);
