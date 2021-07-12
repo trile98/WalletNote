@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_income_periodic_btn_content">THU NHẬP</string>
+    <string name="home_outgo_periodic_btn_content">CHI TIÊU</string>
+    <string name="home_history_title_content">Gần Đây</string>
+</resources>
