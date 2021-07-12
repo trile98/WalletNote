@@ -7,4 +7,8 @@
     <string name="saveFail">Lưu thất bại</string>
 
     <string name="save_fail_temporature">Quá trình lưu gặp lỗi, đã lưu được %1$d thông tin</string>
+
+    <string name="add_new_dialog_periodic_content">Định kỳ</string>
+    <string name="add_new_dialog_normal_content">Bình thường</string>
+    <string name="add_new_dialog_accept_btn_content">Đồng Ý</string>
 </resources>

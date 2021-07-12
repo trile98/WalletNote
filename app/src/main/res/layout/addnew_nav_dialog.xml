@@ -11,7 +11,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="akfjd"
                 android:textColor="@color/black"
                 android:id="@+id/addNewNavTitle"
                 android:textAlignment="center"
@@ -35,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="period"
-                android:text="Dinh ky"
+                android:text="@string/add_new_dialog_periodic_content"
                 />
 
             <RadioButton
@@ -43,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="normal"
-                android:text="Binh Thuong"
+                android:text="@string/add_new_dialog_normal_content"
                 />
         </RadioGroup>
 
@@ -61,7 +60,7 @@
             android:id="@+id/addNewNavConfirmBtn"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="OK"/>
+            android:text="@string/add_new_dialog_accept_btn_content"/>
 
     </LinearLayout>
 
