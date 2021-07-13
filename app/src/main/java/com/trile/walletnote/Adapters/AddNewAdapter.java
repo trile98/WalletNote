@@ -58,7 +58,7 @@ public class AddNewAdapter extends BaseAdapter {
     CustomDialog customDialog;
     HandleMoneyFormat moneyFormat;
 
-    public EditText currentAmountEditTxt;
+    public EditText currentAmountEditTxt, currentDetailEditTxt;
     public ImageView currentImgView;
 
     public ArrayList<Integer> listAmountForCheckEmpty;
@@ -169,6 +169,7 @@ public class AddNewAdapter extends BaseAdapter {
             holder.reasonSpinner.setSelection(selectedIndexReason);
 
             currentAmountEditTxt = holder.amountEditTxt;
+            currentDetailEditTxt = holder.detailEditTxt;
 
             holder.dateTxtView.setText(FinInfo.getChosenDate());
             holder.dateTxtView.setOnClickListener(new View.OnClickListener() {

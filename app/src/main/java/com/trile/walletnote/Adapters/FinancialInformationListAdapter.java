@@ -141,8 +141,8 @@ public class FinancialInformationListAdapter extends BaseAdapter {
             if(img != 0){
                 holder.listViewItemCatalogImg.setImageResource(img);
             }
-            if(info.getDetail().getFinDetContent()!=null)
-                holder.listviewItemDetailTxt.setText(prepareContent(info.getDetail().getFinDetContent()));
+
+            holder.listviewItemDetailTxt.setText(prepareContent(info.getDetail().getFinDetContent()));
 
             if(checkboxMode){
                 holder.listViewItemInfoBtn.setVisibility(View.INVISIBLE);
@@ -217,12 +217,16 @@ public class FinancialInformationListAdapter extends BaseAdapter {
     }
 
     String prepareContent(String content){
-        int length = content.length();
         String result="";
-        if(length>8){
-            result = content.substring(0,8)+"...";
-        }else
-            result = content;
+        if(content!= null) {
+            int length = content.length();
+            if (length > 0) {
+                if (length > 8) {
+                    result = content.substring(0, 8) + "...";
+                } else
+                    result = content;
+            }
+        }
         return result;
     }
 

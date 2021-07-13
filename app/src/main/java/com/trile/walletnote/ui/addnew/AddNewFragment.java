@@ -112,6 +112,7 @@ public class AddNewFragment extends Fragment {
                 imm.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
 
                 adapter.currentAmountEditTxt.clearFocus();
+                adapter.currentDetailEditTxt.clearFocus();
 
                 int id = item.getItemId();
                 if(id == R.id.addnew_toolbar_popup_menu_Delete){
