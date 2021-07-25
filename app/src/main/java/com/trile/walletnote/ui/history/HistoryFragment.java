@@ -469,6 +469,7 @@ public class HistoryFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 deleteInformations();
+                confirmDeleteDialog.dismiss();
             }
         });
 
