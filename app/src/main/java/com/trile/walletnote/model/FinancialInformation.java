@@ -24,7 +24,7 @@ public class FinancialInformation implements Serializable, Cloneable {
     /*
      * 0 - default when var is not set
      * 1 - daily
-     * 2 - monthly
+     * 2 - weekly
      * 3 - monthly
      * */
 

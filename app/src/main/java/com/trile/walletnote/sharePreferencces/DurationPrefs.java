@@ -62,7 +62,7 @@ public class DurationPrefs {
         editor.putString(getKeyField(2,KEY_CONTENT),"Hằng Tuần (7 ngày)");
 
         editor.putInt(getKeyField(3,KEY_ID),3);
-        editor.putString(getKeyField(3,KEY_CONTENT),"Hằng Tháng (30 ngày)");
+        editor.putString(getKeyField(3,KEY_CONTENT),"Hằng Tháng");
 
         editor.putInt(KEY_PREFIX+KEY_MAX_ID+suffix,4);
 

@@ -1,5 +1,6 @@
 package com.trile.walletnote.Services;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
@@ -15,6 +16,7 @@ public class ChangeFormatDateServiceImpl implements ChangeFormatDateService{
     SimpleDateFormat formatForShowing;
     SimpleDateFormat formatDateTime;
 
+    @SuppressLint("SimpleDateFormat")
     public ChangeFormatDateServiceImpl(Context context){
         customDialog = new CustomDialogImpl(context);
         formatDateForSaving = new SimpleDateFormat("yyyyMMdd");
@@ -23,8 +25,8 @@ public class ChangeFormatDateServiceImpl implements ChangeFormatDateService{
         formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     }
 
+    @SuppressLint("SimpleDateFormat")
     public ChangeFormatDateServiceImpl(){
-
         formatDateForSaving = new SimpleDateFormat("yyyyMMdd");
         formatTimeForSaving = new SimpleDateFormat("HHmmss");
         formatForShowing = new SimpleDateFormat("dd/MM/yyyy");

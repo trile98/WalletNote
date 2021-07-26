@@ -2,6 +2,7 @@ package com.trile.walletnote.sharePreferencces;
 
 import android.app.job.JobScheduler;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.trile.walletnote.R;
@@ -14,6 +15,7 @@ import com.trile.walletnote.model.FinancialInformation;
 import com.trile.walletnote.model.ReturnData;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PeriodFinancialInformationPrefs {
     private static final String PREF_NAME ="PERIOD_FINANCIAL_INFO_PREF";
@@ -28,7 +30,10 @@ public class PeriodFinancialInformationPrefs {
 
     private static SharedPreferences.Editor editor;
 
-    private static final String KEY_MAX_ID = "MAX_ID";
+    private static final ArrayList<Integer> thirtyDayMonth = new ArrayList<>(Arrays.asList(4,6,9,11));
+    private static final ArrayList<Integer> thirtyOneDayMonth = new ArrayList<>(Arrays.asList(1,3,5,7,8,10, 12 ));
+
+
 //    private static final String KEY_ID ="_ID"; //need id to get id?
     private static final String KEY_TYPE ="_TYPE";
     private static final String KEY_CHOSENDATE ="_CHOSENDATE";
@@ -36,11 +41,11 @@ public class PeriodFinancialInformationPrefs {
     private static final String KEY_REASON ="_REASON";
     private static final String KEY_DURATION ="_DURATION";
     private static final String KEY_DETAIL = "_DETAIL";
-    private static final String KEY_JOBSERVICE_ID ="_JOB_ID";
 
     CustomDialog customDialog;
     DurationPrefs durationPrefs;
     ReasonPrefs reasonPrefs;
+    CurrentStatusPrefs currentStatusPrefs;
     ChangeFormatDateService changeFormatDateService;
     Context context;
 
@@ -49,6 +54,7 @@ public class PeriodFinancialInformationPrefs {
         durationPrefs   = new DurationPrefs(context);
         reasonPrefs = new ReasonPrefs(context);
         changeFormatDateService = new ChangeFormatDateServiceImpl(context);
+        currentStatusPrefs = new CurrentStatusPrefs(context);
 
         this.context = context;
 
@@ -58,13 +64,17 @@ public class PeriodFinancialInformationPrefs {
         editor = sharedPreferences.edit();
     }
 
+    public boolean checkPrefsEmpty(){
+        return sharedPreferences.getAll().isEmpty();
+    }
+
     String getKeyField(int id,String field,String suffix){
         return KEY_PREFIX+id+ field+suffix;
     }
 
     public int getPeriodIncomeTotal(){
         int total = 0;
-        int maxId = sharedPreferences.getInt(KEY_PREFIX + KEY_MAX_ID + KEY_INCOME_SUFFIX,1);
+        int maxId = currentStatusPrefs.getMaxIdIncome();
 
         for(int i = 1;i<maxId;i++){
             total += sharedPreferences.getInt(getKeyField(i,KEY_AMOUNT,KEY_INCOME_SUFFIX),0);
@@ -74,7 +84,7 @@ public class PeriodFinancialInformationPrefs {
 
     public int getPeriodOutgoTotal(){
         int total = 0;
-        int maxId = sharedPreferences.getInt(KEY_PREFIX + KEY_MAX_ID +KEY_OUTGO_SUFFIX,1);
+        int maxId = currentStatusPrefs.getMaxIdOutgo();
 
         for(int i = 1;i<maxId;i++){
             total += sharedPreferences.getInt(getKeyField(i,KEY_AMOUNT,KEY_OUTGO_SUFFIX),0);
@@ -98,18 +108,21 @@ public class PeriodFinancialInformationPrefs {
         return total;
     }
 
-    public void addNewPeriodInformation(FinancialInformation info, boolean addNewType){
+    public ReturnData addNewPeriodInformation(FinancialInformation info, boolean addNewType){
+        ReturnData returnData = new ReturnData();
         try{
             String suffix = "";
+            int maxId = 1;
             int type= 0;
             if(addNewType){
                 suffix = KEY_OUTGO_SUFFIX;
                 type = 1;
+                maxId = currentStatusPrefs.getMaxIdOutgo();
             }else{
                 suffix = KEY_INCOME_SUFFIX;
-                type = 0;
+                maxId = currentStatusPrefs.getMaxIdIncome();
             }
-            int maxId = sharedPreferences.getInt(KEY_PREFIX + KEY_MAX_ID + suffix,1);
+
 
             editor.putInt(getKeyField(maxId,KEY_TYPE,suffix),type);
             editor.putString(getKeyField(maxId,KEY_CHOSENDATE,suffix), changeFormatDateService.changeFormatDateForSaving(info.getChosenDate()));
@@ -118,35 +131,52 @@ public class PeriodFinancialInformationPrefs {
             editor.putInt(getKeyField(maxId,KEY_DURATION,suffix),info.getDurationType());
             editor.putString(getKeyField(maxId,KEY_DETAIL,suffix),info.getDetail().getFinDetContent());
 
+            int newId = maxId;
+
             maxId++;
+
             //update maxId value
-            editor.putInt(KEY_PREFIX + KEY_MAX_ID + suffix,maxId);
+            if(addNewType)
+                currentStatusPrefs.setMaxIdOutgo(maxId);
+            else
+                currentStatusPrefs.setMaxIdIncome(maxId);
 
             editor.apply();
 
+            returnData.setResult(1);
+            returnData.setMessage(newId+"");
+
+            return returnData;
+
         }catch (Exception e){
-            customDialog.warningDialog("PeriodFinancialInformation.addNewPeriodInformation: "+e.toString());
+            returnData.setResult(2);
+            returnData.setMessage("PeriodFinancialInformation.addNewPeriodInformation: "+e.toString());
+            return returnData;
         }
 
     }
 
     public int getCurrentId(boolean addNewType){
         String suffix = "";
+        int result = 0;
         if(addNewType){
             suffix = KEY_OUTGO_SUFFIX;
+            result = currentStatusPrefs.getMaxIdOutgo();
         }else{
             suffix = KEY_INCOME_SUFFIX;
+            result = currentStatusPrefs.getMaxIdIncome();
         }
-        int result = sharedPreferences.getInt(KEY_PREFIX + KEY_MAX_ID + suffix,1);
         return result-1;
     }
 
-    private FinancialInformation getFinInfo(int id, String suffix){
+    public FinancialInformation getFinInfo(int id){
         FinancialInformation info = new FinancialInformation();
-        boolean check = sharedPreferences.contains(getKeyField(id,KEY_AMOUNT,suffix));
-        if(check){
+        String suffix = "";
+        if(sharedPreferences.contains(getKeyField(id,KEY_AMOUNT,KEY_INCOME_SUFFIX))){
+            suffix = KEY_INCOME_SUFFIX;
+
             info.setID(id);
-            info.setType(sharedPreferences.getInt(getKeyField(id, KEY_TYPE, suffix), 0) == 1);
+            info.setType(false);
             info.setChosenDate(changeFormatDateService.changeFormatDateForShowing(sharedPreferences.getString(getKeyField(id,KEY_CHOSENDATE,suffix),"")));
             info.setAmount(sharedPreferences.getInt(getKeyField(id,KEY_AMOUNT,suffix),0));
             info.setReason(sharedPreferences.getString(getKeyField(id,KEY_REASON,suffix),"1"));
@@ -154,18 +184,31 @@ public class PeriodFinancialInformationPrefs {
             info.setDetail(new FinancialDetail(sharedPreferences.getString(getKeyField(id,KEY_DETAIL,suffix),"")));
 
             return info;
-        }else
+        }
+        if(sharedPreferences.contains(getKeyField(id,KEY_AMOUNT,KEY_OUTGO_SUFFIX))){
+            suffix = KEY_OUTGO_SUFFIX;
+
+            info.setID(id);
+            info.setType(true);
+            info.setChosenDate(changeFormatDateService.changeFormatDateForShowing(sharedPreferences.getString(getKeyField(id,KEY_CHOSENDATE,suffix),"")));
+            info.setAmount(sharedPreferences.getInt(getKeyField(id,KEY_AMOUNT,suffix),0));
+            info.setReason(sharedPreferences.getString(getKeyField(id,KEY_REASON,suffix),"1"));
+            info.setDurationType(sharedPreferences.getInt(getKeyField(id,KEY_DURATION,suffix),1));
+            info.setDetail(new FinancialDetail(sharedPreferences.getString(getKeyField(id,KEY_DETAIL,suffix),"")));
+
+            return info;
+        }
             return null;
     }
 
     public ArrayList<FinancialInformation> getListPeriodIncoming(){
         ArrayList<FinancialInformation> result = new ArrayList<>();
 
-        int maxIncomingId = sharedPreferences.getInt(KEY_PREFIX + KEY_MAX_ID + KEY_INCOME_SUFFIX,1);
+        int maxIncomingId = currentStatusPrefs.getMaxIdIncome();
 
         FinancialInformation info = new FinancialInformation();
         for(int i= maxIncomingId; i >0 ; i --){
-            info = getFinInfo(i,KEY_INCOME_SUFFIX);
+            info = getFinInfo(i);
             if(info != null)
                 result.add(info);
         }
@@ -175,27 +218,96 @@ public class PeriodFinancialInformationPrefs {
     public ArrayList<FinancialInformation> getListPeriodOutgoing(){
         ArrayList<FinancialInformation> result = new ArrayList<>();
 
-        int maxOutgoingId = sharedPreferences.getInt(KEY_PREFIX + KEY_MAX_ID + KEY_OUTGO_SUFFIX,1);
+        int maxOutgoingId = currentStatusPrefs.getMaxIdOutgo();
 
         FinancialInformation info = new FinancialInformation();
         for(int i= maxOutgoingId; i >0 ; i --){
-            info = getFinInfo(i,KEY_OUTGO_SUFFIX);
+            info = getFinInfo(i);
             if(info != null)
                 result.add(info);
         }
         return result;
     }
 
-    public void setJobId(int id, boolean addNewType){
+    public ReturnData updatePeriodInfo(FinancialInformation info){
+        ReturnData returnData = new ReturnData();
+        int id = info.getID();
+
         String suffix ="";
-        if(addNewType)
+        if(info.getType())
             suffix = KEY_OUTGO_SUFFIX;
         else
             suffix = KEY_INCOME_SUFFIX;
 
-        editor.putInt(getKeyField(id,KEY_JOBSERVICE_ID,suffix),Integer.parseInt(context.getString(R.string.duration_auto_job_id_prefix)+""+id));
+        try {
 
-        editor.apply();
+            if (sharedPreferences.contains(getKeyField(id, KEY_AMOUNT, KEY_INCOME_SUFFIX))) {
+
+                if (!info.getType()) { // in case change type to outgo
+//                    editor.putInt(getKeyField(id,KEY_JOBSERVICE_ID,suffix),sharedPreferences.getInt(getKeyField(id,KEY_JOBSERVICE_ID,KEY_INCOME_SUFFIX),0));
+//
+//                    ReturnData deleteResult = deletePeriodInfo(id, false);//delete exist income
+//
+//                    if(deleteResult.getResult() == 2){
+//                        returnData.setResult(2);
+//                        returnData.setMessage(deleteResult.getMessage());
+//                        return returnData;
+//                    }
+//                    cannot do that because it will overwrite other info in periodic file
+                }
+
+                editor.putInt(getKeyField(id, KEY_TYPE, suffix), (info.getType() ? 1 : 0));
+                editor.putString(getKeyField(id, KEY_CHOSENDATE, suffix), changeFormatDateService.changeFormatDateForSaving(info.getChosenDate()));
+                editor.putInt(getKeyField(id, KEY_AMOUNT, suffix), info.getAmount());
+                editor.putString(getKeyField(id, KEY_REASON, suffix), String.valueOf(reasonPrefs.getReasonIdForSaving(info.getReason())));
+                editor.putInt(getKeyField(id, KEY_DURATION, suffix), info.getDurationType());
+                editor.putString(getKeyField(id, KEY_DETAIL, suffix), info.getDetail().getFinDetContent());
+
+                editor.apply();
+
+                returnData.setResult(1);
+                returnData.setMessage("");
+                return returnData;
+            }
+            if (sharedPreferences.contains(getKeyField(id, KEY_AMOUNT, KEY_OUTGO_SUFFIX))) {
+
+                if (info.getType()) { // in case change type to income
+//                    editor.putInt(getKeyField(id,KEY_JOBSERVICE_ID,suffix),sharedPreferences.getInt(getKeyField(id,KEY_JOBSERVICE_ID,KEY_OUTGO_SUFFIX),0));
+//
+//                    ReturnData deleteResult = deletePeriodInfo(id, true);//delete exist outgo
+//
+//                    if(deleteResult.getResult() == 2){
+//                        returnData.setResult(2);
+//                        returnData.setMessage(deleteResult.getMessage());
+//                        return returnData;
+//                    }
+//                  cannot do that because it will be overwrite orther info in periodic file
+                }
+
+                editor.putInt(getKeyField(id, KEY_TYPE, suffix), (info.getType() ? 1 : 0));
+                editor.putString(getKeyField(id, KEY_CHOSENDATE, suffix), changeFormatDateService.changeFormatDateForSaving(info.getChosenDate()));
+                editor.putInt(getKeyField(id, KEY_AMOUNT, suffix), info.getAmount());
+                editor.putString(getKeyField(id, KEY_REASON, suffix), String.valueOf(reasonPrefs.getReasonIdForSaving(info.getReason())));
+                editor.putInt(getKeyField(id, KEY_DURATION, suffix), info.getDurationType());
+                editor.putString(getKeyField(id, KEY_DETAIL, suffix), info.getDetail().getFinDetContent());
+
+                editor.apply();
+
+                returnData.setResult(1);
+                returnData.setMessage("");
+                return returnData;
+            }
+
+            returnData.setResult(2);
+            returnData.setMessage("PeriodFinancialInformation.updatePeriodInfo: This info doesn't exist");
+            return returnData;
+
+        }catch (Exception e){
+            returnData.setResult(2);
+            returnData.setMessage("PeriodFinancialInformation.updatePeriodInfo: "+e.toString());
+            return returnData;
+        }
+
     }
 
     public ReturnData deletePeriodInfo(int id, boolean addNewType){
@@ -207,12 +319,6 @@ public class PeriodFinancialInformationPrefs {
             else
                 suffix = KEY_INCOME_SUFFIX;
 
-            //cancel job
-            int jobId = sharedPreferences.getInt(getKeyField(id, KEY_JOBSERVICE_ID, suffix), 0);
-            JobScheduler scheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-            if (scheduler != null) {
-                scheduler.cancel(jobId);
-            }
 
             editor.remove(getKeyField(id, KEY_TYPE, suffix));
             editor.remove(getKeyField(id, KEY_CHOSENDATE, suffix));
@@ -220,7 +326,6 @@ public class PeriodFinancialInformationPrefs {
             editor.remove(getKeyField(id, KEY_REASON, suffix));
             editor.remove(getKeyField(id, KEY_DURATION, suffix));
             editor.remove(getKeyField(id, KEY_DETAIL, suffix));
-            editor.remove(getKeyField(id, KEY_JOBSERVICE_ID, suffix));
 
             editor.apply();
 
@@ -245,20 +350,12 @@ public class PeriodFinancialInformationPrefs {
                 else
                     suffix = KEY_INCOME_SUFFIX;
 
-                //cancel job
-                int jobId = sharedPreferences.getInt(getKeyField(item, KEY_JOBSERVICE_ID, suffix), 0);
-                JobScheduler scheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-                if (scheduler != null) {
-                    scheduler.cancel(jobId);
-                }
-
                 editor.remove(getKeyField(item, KEY_TYPE, suffix));
                 editor.remove(getKeyField(item, KEY_CHOSENDATE, suffix));
                 editor.remove(getKeyField(item, KEY_AMOUNT, suffix));
                 editor.remove(getKeyField(item, KEY_REASON, suffix));
                 editor.remove(getKeyField(item, KEY_DURATION, suffix));
                 editor.remove(getKeyField(item, KEY_DETAIL, suffix));
-                editor.remove(getKeyField(item, KEY_JOBSERVICE_ID, suffix));
 
                 editor.apply();
                 successDeleteCount++;
@@ -272,5 +369,136 @@ public class PeriodFinancialInformationPrefs {
         returnData.setResult(1);
         returnData.setMessage(context.getString(R.string.history_delete_successfully_message,successDeleteCount));
         return returnData;
+    }
+
+    public ArrayList<FinancialInformation> getListDailyFI(){
+        ArrayList<FinancialInformation> result = new ArrayList<>();
+
+        int maxIncomingId = currentStatusPrefs.getMaxIdIncome();
+
+        FinancialInformation info = new FinancialInformation();
+        for(int i= maxIncomingId; i >0 ; i --){
+            if(sharedPreferences.getInt(getKeyField(i,KEY_DURATION,KEY_INCOME_SUFFIX),0)==1 && checkItemTime(i,1,KEY_INCOME_SUFFIX)) {
+                info = getFinInfo(i);
+                if (info != null)
+                    result.add(info);
+            }
+        }
+
+        int maxOutgoingId = currentStatusPrefs.getMaxIdOutgo();
+
+        for(int i= maxOutgoingId; i >0 ; i --){
+            if(sharedPreferences.getInt(getKeyField(i,KEY_DURATION,KEY_OUTGO_SUFFIX),0)==1 && checkItemTime(i,1,KEY_OUTGO_SUFFIX)) {
+                info = getFinInfo(i);
+                if (info != null)
+                    result.add(info);
+            }
+        }
+
+        return result;
+    }
+
+    public ArrayList<FinancialInformation> getListWeeklyFI(){
+        ArrayList<FinancialInformation> result = new ArrayList<>();
+
+        int maxIncomingId = currentStatusPrefs.getMaxIdIncome();
+        FinancialInformation info = new FinancialInformation();
+        for(int i= maxIncomingId; i >0 ; i --){
+            if(sharedPreferences.getInt(getKeyField(i,KEY_DURATION,KEY_INCOME_SUFFIX),0)==2 && checkItemTime(i,2,KEY_INCOME_SUFFIX)) {
+                info = getFinInfo(i);
+                if (info != null)
+                    result.add(info);
+            }
+        }
+
+        int maxOutgoingId = currentStatusPrefs.getMaxIdOutgo();
+        for(int i= maxOutgoingId; i >0 ; i --){
+            if(sharedPreferences.getInt(getKeyField(i,KEY_DURATION,KEY_OUTGO_SUFFIX),0)==2 && checkItemTime(i, 2, KEY_OUTGO_SUFFIX)) {
+                info = getFinInfo(i);
+                if (info != null)
+                    result.add(info);
+            }
+        }
+
+        return result;
+    }
+
+
+    public ArrayList<FinancialInformation> getListMonthlyFI(){
+        ArrayList<FinancialInformation> result = new ArrayList<>();
+
+        int maxIncomingId = currentStatusPrefs.getMaxIdIncome();
+        FinancialInformation info = new FinancialInformation();
+        for(int i= maxIncomingId; i >0 ; i --){
+            if(sharedPreferences.getInt(getKeyField(i,KEY_DURATION,KEY_INCOME_SUFFIX),0)==3 && checkItemTime(i,3,KEY_INCOME_SUFFIX)) {
+                info = getFinInfo(i);
+                if (info != null)
+                    result.add(info);
+            }
+        }
+
+        int maxOutgoingId = currentStatusPrefs.getMaxIdOutgo();
+        for(int i= maxOutgoingId; i >0 ; i --){
+            if(sharedPreferences.getInt(getKeyField(i,KEY_DURATION,KEY_OUTGO_SUFFIX),0)==3 && checkItemTime(i, 3, KEY_OUTGO_SUFFIX)) {
+                info = getFinInfo(i);
+                if (info != null)
+                    result.add(info);
+            }
+        }
+
+        return result;
+    }
+
+    private boolean checkItemTime(int id, int durationType, String suffix){
+        int currentDate = Integer.parseInt(changeFormatDateService.getCurrentDateForSaving());
+
+        int currentChosenDate = Integer.parseInt(sharedPreferences.getString(getKeyField(id,KEY_CHOSENDATE,suffix),"0"));
+
+        if(currentChosenDate != 0 && (currentChosenDate <= currentDate)) {
+            if(durationType == 1)
+                return true;
+
+            if(durationType == 2  && (currentDate - currentChosenDate)%7 == 0)
+                return true;
+
+            if(durationType == 3){
+                if(checkLastDayOfMonth(currentChosenDate)){
+                    return checkLastDayOfMonth(currentDate);
+                }
+                else{ // if chosen date is not last day of month, just check day equal to current date
+                    return getDateFromString(currentDate) == getDateFromString(currentChosenDate);
+                }
+            }
+        }
+        return false;
+    }
+
+    private int getMonthFromString (int date){
+        String stringDate = String.valueOf(date);
+        return Integer.parseInt(stringDate.substring(4,6));
+    }
+
+    private int getDateFromString (int date){
+        String stringDate = String.valueOf(date);
+        return Integer.parseInt(stringDate.substring(6,8));
+    }
+
+    private int getYearFromString (int date){
+        String stringDate = String.valueOf(date);
+        return Integer.parseInt(stringDate.substring(0,4));
+    }
+
+    private boolean checkLastDayOfMonth(int date){
+        if( (thirtyOneDayMonth.contains(getMonthFromString(date)) && getDateFromString(date) == 31)
+                || (thirtyDayMonth.contains(getMonthFromString(date)) && getDateFromString(date) == 30))
+            return true;
+        if(getMonthFromString(date)==2){
+            if(getYearFromString(date) % 4 == 0 && getDateFromString(date) == 29)
+                return true;
+            if(getYearFromString(date) % 4 != 0 && getDateFromString(date) == 28)
+                return true;
+        }
+
+        return false;
     }
 }

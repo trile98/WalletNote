@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.trile.walletnote.Adapters.FinancialInformationListAdapter;
+import com.trile.walletnote.Jobs.MasterJob;
 import com.trile.walletnote.R;
 import com.trile.walletnote.Services.CustomDialog;
 import com.trile.walletnote.Services.CustomDialogImpl;
@@ -496,6 +498,14 @@ public class HistoryFragment extends Fragment{
                 returnData = periodFinancialInformationPrefs.deletePeriodInfo(listAdapter.listIdOfCheckedItems, true);
             else
                 returnData = periodFinancialInformationPrefs.deletePeriodInfo(listAdapter.listIdOfCheckedItems, false);
+
+            if(periodFinancialInformationPrefs.checkPrefsEmpty()){
+                Intent intentService = new Intent(rootView.getContext(), MasterJob.class);
+                rootView.getContext().stopService(intentService);
+
+                currentStatusPrefs.setMaxIdIncome(1);
+                currentStatusPrefs.setMaxIdOutgo(1);
+            }
 
         }
 

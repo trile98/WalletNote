@@ -1,14 +1,17 @@
 package com.trile.walletnote.Services;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.trile.walletnote.Adapters.AddNewAdapter;
 import com.trile.walletnote.DAOS.AddNewDao;
 import com.trile.walletnote.DAOS.AddNewDaoImpl;
+import com.trile.walletnote.Jobs.MasterJob;
 import com.trile.walletnote.model.FinancialDetail;
 import com.trile.walletnote.model.FinancialInformation;
 import com.trile.walletnote.model.ReturnData;
 import com.trile.walletnote.sharePreferencces.CurrentStatusPrefs;
+import com.trile.walletnote.sharePreferencces.PeriodFinancialInformationPrefs;
 import com.trile.walletnote.sharePreferencces.ReasonPrefs;
 
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ public class AddNewFragmentServiceImpl implements AddNewFragmentService {
 
     CurrentStatusPrefs currentStatusPrefs;
     ReasonPrefs reasonPrefs;
+    PeriodFinancialInformationPrefs periodFinancialInformationPrefs;
 
     String durationType;
 
@@ -35,6 +39,8 @@ public class AddNewFragmentServiceImpl implements AddNewFragmentService {
 
         currentStatusPrefs = new CurrentStatusPrefs(this.context);
         reasonPrefs = new ReasonPrefs(this.context);
+        periodFinancialInformationPrefs = new PeriodFinancialInformationPrefs(this.context);
+
         addNewType = currentStatusPrefs.getAddNewStatus();
         customDialog = new CustomDialogImpl(context);
         changeFormatDateService = new ChangeFormatDateServiceImpl(this.context);
@@ -69,7 +75,13 @@ public class AddNewFragmentServiceImpl implements AddNewFragmentService {
                 }
 //                    add period
                 else if(durationType.equals("period")){
+                    boolean checkFirstTimeAdd = periodFinancialInformationPrefs.checkPrefsEmpty();
                     returnData = addNewDao.savePeriodFinInfo(FinList,addNewType);
+
+                    if(checkFirstTimeAdd){ // start master service
+                        Intent intentService = new Intent(context, MasterJob.class);
+                        context.startService(intentService);
+                    }
                 }
             }
             return returnData;

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="master_job_notification_title">Dịch vụ của Wallet Note</string>
+    <string name="master_job_notification_content">Dịch vụ xử lý các thông tin định kỳ đang hoạt động</string>
+</resources>

@@ -1,7 +1,14 @@
 package com.trile.walletnote.Activities;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
@@ -14,6 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.trile.walletnote.Jobs.DurationFinHandleJob;
 import com.trile.walletnote.ui.history.HistoryFragment;
 import com.trile.walletnote.R;
 import com.trile.walletnote.sharePreferencces.CurrentStatusPrefs;
@@ -25,7 +33,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity {
+
+    public final static String CHANNEL_ID = "walletnote_notification_channel_id";
 
     int currentTabId;
     public int previousTabId;
@@ -37,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         countVar = 0;
+        createNotificationChannel();
         setContentView(R.layout.activity_main);
         navView = findViewById(R.id.nav_view);
 
@@ -54,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         previousTabId = R.id.navigation_home;
 
         navView.setOnNavigationItemSelectedListener(navListener);
-
     }
 
     boolean doubleBackToExitPressedOnce = false;
@@ -181,6 +193,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void replaceFragment(int chosenFragmentId){
         navView.setSelectedItemId(chosenFragmentId);
+    }
+
+
+    private void createNotificationChannel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID,"WalletNote Notification Channel", NotificationManager.IMPORTANCE_DEFAULT);
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+
+            if(manager!= null)
+                manager.createNotificationChannel(notificationChannel);
+        }
     }
 
 }

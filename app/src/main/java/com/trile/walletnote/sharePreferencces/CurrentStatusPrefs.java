@@ -14,13 +14,14 @@ public class CurrentStatusPrefs {
 
     private static SharedPreferences.Editor editor;
 
-    private static String KEY_MAX_ID ="MAX_ID";
-
     private static String KEY_ADD_NEW_TYPE ="_ADD_NEW_TYPE";
     private static String KEY_DURATION_TYPE ="_DURATION_TYPE";
 
     private static String KEY_FINANCIAL_TYPE_FOR_HISTORY ="_FINANCIAL_TYPE_FOR_HISTORY";
     private static String KEY_DURATION_TYPE_FOR_HISTORY ="_DURATION_TYPE_FOR_HISTORY";
+
+    private static final String KEY_MAX_ID_INCOME = "PERIOD_FIN_MAX_ID_INCOME";
+    private static final String KEY_MAX_ID_OUTGO = "PERIOD_FIN_MAX_ID_OUTGO";
 
     private Context context;
 
@@ -81,4 +82,21 @@ public class CurrentStatusPrefs {
         return durationType;
     }
 
+    public int getMaxIdIncome(){
+        return sharedPreferences.getInt(getKeyField(KEY_MAX_ID_INCOME),1);
+    }
+
+    public int getMaxIdOutgo(){
+        return sharedPreferences.getInt(getKeyField(KEY_MAX_ID_OUTGO),1);
+    }
+
+    public void setMaxIdIncome(int i){
+        editor.putInt(getKeyField(KEY_MAX_ID_INCOME),i);
+        editor.apply();
+    }
+
+    public void setMaxIdOutgo(int i){
+        editor.putInt(getKeyField(KEY_MAX_ID_OUTGO),i);
+        editor.apply();
+    }
 }

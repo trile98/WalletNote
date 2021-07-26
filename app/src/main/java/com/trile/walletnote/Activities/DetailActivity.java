@@ -43,6 +43,7 @@ import com.trile.walletnote.model.FinancialDetail;
 import com.trile.walletnote.model.FinancialInformation;
 import com.trile.walletnote.model.ReturnData;
 import com.trile.walletnote.sharePreferencces.DurationPrefs;
+import com.trile.walletnote.sharePreferencces.PeriodFinancialInformationPrefs;
 import com.trile.walletnote.sharePreferencces.ReasonPrefs;
 
 import java.io.ByteArrayOutputStream;
@@ -71,6 +72,7 @@ public class DetailActivity extends AppCompatActivity {
 
     ReasonPrefs reasonPrefs;
     DurationPrefs durationPrefs;
+    PeriodFinancialInformationPrefs periodFinancialInformationPrefs;
 
     CustomDialog customDialog;
 
@@ -147,6 +149,7 @@ public class DetailActivity extends AppCompatActivity {
 
         reasonPrefs = new ReasonPrefs(this);
         durationPrefs = new DurationPrefs(this);
+        periodFinancialInformationPrefs = new PeriodFinancialInformationPrefs(this);
 
         customDialog = new CustomDialogImpl(this);
 
@@ -265,6 +268,8 @@ public class DetailActivity extends AppCompatActivity {
 
                     if(currentPeriodType){
                         returnData = detailFragmentService.updateFinancialInformation(tempInfo);
+                    }else{
+                        returnData = periodFinancialInformationPrefs.updatePeriodInfo(tempInfo);
                     }
 
                     if(returnData.getResult() == 1){
