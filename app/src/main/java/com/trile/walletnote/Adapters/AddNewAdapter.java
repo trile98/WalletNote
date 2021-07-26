@@ -181,6 +181,12 @@ public class AddNewAdapter extends BaseAdapter {
 
             holder.amountEditTxt.setText(moneyFormat.FormatMoneyForShowing(String.valueOf(FinInfo.getAmount())));
 
+            if (FinInfo.getDetail() != null) {
+                holder.detailEditTxt.setText(FinInfo.getDetail().getFinDetContent());
+            } else {
+                holder.detailEditTxt.setText("");
+            }
+
             holder.imageBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -248,14 +254,7 @@ public class AddNewAdapter extends BaseAdapter {
 
                     }
                 });
-            } else {
-                if (FinInfo.getDetail() != null) {
-                    holder.detailEditTxt.setText(FinInfo.getDetail().getFinDetContent());
-                } else {
-                    holder.detailEditTxt.setText("");
-                }
             }
-
 
             if(holder.imgView.getDrawable()!= null)
                 updateCheckLayoutHeight(holder);
@@ -346,7 +345,7 @@ public class AddNewAdapter extends BaseAdapter {
                 else {
                     if(input.equals("")){
                         listAmountForCheckEmpty.set(pos,0);
-                        holder.amountEditTxt.setError("Nhap so tien");
+                        holder.amountEditTxt.setError(context.getString(R.string.add_new_amount_empty_error));
                     }else {
                         if(Integer.parseInt(input)!=0) {
                             listAmountForCheckEmpty.set(pos,Integer.parseInt(input));
@@ -355,7 +354,7 @@ public class AddNewAdapter extends BaseAdapter {
                             FinList.get(pos).setAmount(Integer.parseInt(moneyFormat.FormatMoneyForSaving(input)));
                         }else {
                             listAmountForCheckEmpty.set(pos,0);
-                            holder.amountEditTxt.setError("Nhap so tien");
+                            holder.amountEditTxt.setError(context.getString(R.string.add_new_amount_empty_error));
                         }
 
                     }
