@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/box_inset_layout_padding"
+    tools:context=".Activities.SettingActivity">
+
+    <Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="#1fcecb"
+        android:titleTextColor="@color/white"
+        android:title="@string/setting_toolbar_title"
+        android:id="@+id/setting_toolbar"
+        android:layout_alignParentTop="true"
+        android:navigationIcon="@drawable/ic_arrow_back_white"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/setting_main_layout"
+        android:layout_below="@+id/setting_toolbar"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingHorizontal="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_app_master_service_notification"
+                android:background="@color/appThemeColor"/>
+
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textSize="20dp"
+                android:id="@+id/setting_service_check_switch"
+                android:text="@string/setting_service_check_title"
+                android:layout_marginHorizontal="10dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

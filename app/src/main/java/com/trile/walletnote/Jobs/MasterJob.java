@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.trile.walletnote.R;
+import com.trile.walletnote.sharePreferencces.CurrentStatusPrefs;
 
 import java.util.Calendar;
 
@@ -35,6 +36,7 @@ public class MasterJob extends Service { //this job wil run forever (after addin
         Notification notification = new NotificationCompat.Builder(this,CHANNEL_ID)
                 .setContentTitle(getString(R.string.master_job_notification_title))
                 .setContentText(getString(R.string.master_job_notification_content))
+                .setSmallIcon(R.drawable.ic_app_master_service_notification)
                 .build();
 
         Calendar cal = Calendar.getInstance();
@@ -54,6 +56,16 @@ public class MasterJob extends Service { //this job wil run forever (after addin
 
         startForeground(1,notification);
 
+        CurrentStatusPrefs currentStatusPrefs = new CurrentStatusPrefs(this);
+        currentStatusPrefs.setCheckMasterServiceRun(true);
+
         return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        CurrentStatusPrefs currentStatusPrefs = new CurrentStatusPrefs(this);
+        currentStatusPrefs.setCheckMasterServiceRun(false);
     }
 }

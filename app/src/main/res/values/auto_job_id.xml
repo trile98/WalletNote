@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="duration_auto_job_id_prefix">1</string>
-    <string name="delay_auto_job_id_prefix">2</string>
-</resources>

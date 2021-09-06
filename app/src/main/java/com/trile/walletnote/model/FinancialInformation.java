@@ -253,7 +253,7 @@ public class FinancialInformation implements Serializable, Cloneable {
         else
             contentValues.put("FIN_INFO_TYPE",0);
 
-        contentValues.put("FIN_INFO_CHOSEN_DATE",changeFormatDateService.getCurrentDateForSaving());
+        contentValues.put("FIN_INFO_CHOSEN_DATE",changeFormatDateService.getCurrentDateStringForPeriodJob());
 
         contentValues.put("FIN_INFO_AMOUNT" ,this.getAmount());
 

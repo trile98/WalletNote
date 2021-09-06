@@ -23,6 +23,8 @@ public class CurrentStatusPrefs {
     private static final String KEY_MAX_ID_INCOME = "PERIOD_FIN_MAX_ID_INCOME";
     private static final String KEY_MAX_ID_OUTGO = "PERIOD_FIN_MAX_ID_OUTGO";
 
+    private static final String KEY_CHECK_MASTER_SERVICE = "CHECK_MASTER_SERVICE_RUN";
+
     private Context context;
 
 
@@ -97,6 +99,13 @@ public class CurrentStatusPrefs {
 
     public void setMaxIdOutgo(int i){
         editor.putInt(getKeyField(KEY_MAX_ID_OUTGO),i);
+        editor.apply();
+    }
+
+    public boolean getCheckMasterServiceRun(){ return sharedPreferences.getBoolean(getKeyField(KEY_CHECK_MASTER_SERVICE),false);}
+
+    public void setCheckMasterServiceRun(boolean check) {
+        editor.putBoolean(getKeyField(KEY_CHECK_MASTER_SERVICE),check);
         editor.apply();
     }
 }

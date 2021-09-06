@@ -470,7 +470,7 @@ public class HistoryFragment extends Fragment{
         deleteDialogDeleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteInformations();
+                deleteInformation();
                 confirmDeleteDialog.dismiss();
             }
         });
@@ -488,7 +488,7 @@ public class HistoryFragment extends Fragment{
         confirmDeleteDialog.show();
     }
 
-    private void deleteInformations(){
+    private void deleteInformation(){
         ReturnData returnData = new ReturnData();
         if (normalBtn.isSelected()) {
             returnData = historyFragmentService.deleteFinancialInformations(listAdapter.listIdOfCheckedItems);

@@ -131,7 +131,7 @@ public class FinancialInformationListAdapter extends BaseAdapter {
 
             if (info.getType()) { //outgoing value
                 holder.listviewItemAmountTxt.setTextColor(Color.parseColor("#F80000"));
-                holder.listviewItemAmountTxt.setText("- " + moneyFormat.FormatMoneyForShowing(String.valueOf(info.getAmount())));
+                holder.listviewItemAmountTxt.setText(String.format("- %s", moneyFormat.FormatMoneyForShowing(String.valueOf(info.getAmount()))));
             } else {
                 holder.listviewItemAmountTxt.setTextColor(Color.parseColor("#4caf50"));
                 holder.listviewItemAmountTxt.setText(moneyFormat.FormatMoneyForShowing(String.valueOf(info.getAmount())));

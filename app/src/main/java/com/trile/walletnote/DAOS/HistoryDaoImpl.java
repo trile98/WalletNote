@@ -147,9 +147,8 @@ public class HistoryDaoImpl implements HistoryDao{
     }
 
     @Override
-    public ReturnData deleteFinancialInformations(String listId) {
+    public ReturnData deleteFinancialInformation(String listId) {
         ReturnData returnData = new ReturnData();
-Log.e("list",listId);
         int deleteResult = db.delete("FINANCIAL_INFORMATION", "FIN_INFO_ID in ("+listId+")", null);
 
         if(deleteResult == 0){

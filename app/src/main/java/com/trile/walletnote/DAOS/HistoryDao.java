@@ -11,5 +11,5 @@ public interface HistoryDao {
     ArrayList<FinancialInformation> getListNormalOutgoing(int month, int year, boolean filterMode, String contentForSearch, boolean searchMode);
     int getTotal(String stringOfListId);
 
-    ReturnData deleteFinancialInformations(String listId);
+    ReturnData deleteFinancialInformation(String listId);
 }

@@ -30,8 +30,6 @@ public class PeriodFinancialInformationPrefs {
 
     private static SharedPreferences.Editor editor;
 
-    private static final ArrayList<Integer> thirtyDayMonth = new ArrayList<>(Arrays.asList(4,6,9,11));
-    private static final ArrayList<Integer> thirtyOneDayMonth = new ArrayList<>(Arrays.asList(1,3,5,7,8,10, 12 ));
 
 
 //    private static final String KEY_ID ="_ID"; //need id to get id?
@@ -169,14 +167,14 @@ public class PeriodFinancialInformationPrefs {
         return result-1;
     }
 
-    public FinancialInformation getFinInfo(int id){
+    public FinancialInformation getFinInfo(int id, String suffix){
         FinancialInformation info = new FinancialInformation();
-        String suffix = "";
-        if(sharedPreferences.contains(getKeyField(id,KEY_AMOUNT,KEY_INCOME_SUFFIX))){
-            suffix = KEY_INCOME_SUFFIX;
+        if(sharedPreferences.contains(getKeyField(id,KEY_AMOUNT,suffix))){
 
             info.setID(id);
-            info.setType(false);
+
+            info.setType(KEY_OUTGO_SUFFIX.equals(suffix));
+
             info.setChosenDate(changeFormatDateService.changeFormatDateForShowing(sharedPreferences.getString(getKeyField(id,KEY_CHOSENDATE,suffix),"")));
             info.setAmount(sharedPreferences.getInt(getKeyField(id,KEY_AMOUNT,suffix),0));
             info.setReason(sharedPreferences.getString(getKeyField(id,KEY_REASON,suffix),"1"));
@@ -185,20 +183,7 @@ public class PeriodFinancialInformationPrefs {
 
             return info;
         }
-        if(sharedPreferences.contains(getKeyField(id,KEY_AMOUNT,KEY_OUTGO_SUFFIX))){
-            suffix = KEY_OUTGO_SUFFIX;
-
-            info.setID(id);
-            info.setType(true);
-            info.setChosenDate(changeFormatDateService.changeFormatDateForShowing(sharedPreferences.getString(getKeyField(id,KEY_CHOSENDATE,suffix),"")));
-            info.setAmount(sharedPreferences.getInt(getKeyField(id,KEY_AMOUNT,suffix),0));
-            info.setReason(sharedPreferences.getString(getKeyField(id,KEY_REASON,suffix),"1"));
-            info.setDurationType(sharedPreferences.getInt(getKeyField(id,KEY_DURATION,suffix),1));
-            info.setDetail(new FinancialDetail(sharedPreferences.getString(getKeyField(id,KEY_DETAIL,suffix),"")));
-
-            return info;
-        }
-            return null;
+        return null;
     }
 
     public ArrayList<FinancialInformation> getListPeriodIncoming(){
@@ -208,7 +193,7 @@ public class PeriodFinancialInformationPrefs {
 
         FinancialInformation info = new FinancialInformation();
         for(int i= maxIncomingId; i >0 ; i --){
-            info = getFinInfo(i);
+            info = getFinInfo(i,KEY_INCOME_SUFFIX);
             if(info != null)
                 result.add(info);
         }
@@ -222,7 +207,7 @@ public class PeriodFinancialInformationPrefs {
 
         FinancialInformation info = new FinancialInformation();
         for(int i= maxOutgoingId; i >0 ; i --){
-            info = getFinInfo(i);
+            info = getFinInfo(i,KEY_OUTGO_SUFFIX);
             if(info != null)
                 result.add(info);
         }
@@ -379,7 +364,7 @@ public class PeriodFinancialInformationPrefs {
         FinancialInformation info = new FinancialInformation();
         for(int i= maxIncomingId; i >0 ; i --){
             if(sharedPreferences.getInt(getKeyField(i,KEY_DURATION,KEY_INCOME_SUFFIX),0)==1 && checkItemTime(i,1,KEY_INCOME_SUFFIX)) {
-                info = getFinInfo(i);
+                info = getFinInfo(i,KEY_INCOME_SUFFIX);
                 if (info != null)
                     result.add(info);
             }
@@ -389,7 +374,7 @@ public class PeriodFinancialInformationPrefs {
 
         for(int i= maxOutgoingId; i >0 ; i --){
             if(sharedPreferences.getInt(getKeyField(i,KEY_DURATION,KEY_OUTGO_SUFFIX),0)==1 && checkItemTime(i,1,KEY_OUTGO_SUFFIX)) {
-                info = getFinInfo(i);
+                info = getFinInfo(i,KEY_OUTGO_SUFFIX);
                 if (info != null)
                     result.add(info);
             }
@@ -405,7 +390,7 @@ public class PeriodFinancialInformationPrefs {
         FinancialInformation info = new FinancialInformation();
         for(int i= maxIncomingId; i >0 ; i --){
             if(sharedPreferences.getInt(getKeyField(i,KEY_DURATION,KEY_INCOME_SUFFIX),0)==2 && checkItemTime(i,2,KEY_INCOME_SUFFIX)) {
-                info = getFinInfo(i);
+                info = getFinInfo(i,KEY_INCOME_SUFFIX);
                 if (info != null)
                     result.add(info);
             }
@@ -414,7 +399,7 @@ public class PeriodFinancialInformationPrefs {
         int maxOutgoingId = currentStatusPrefs.getMaxIdOutgo();
         for(int i= maxOutgoingId; i >0 ; i --){
             if(sharedPreferences.getInt(getKeyField(i,KEY_DURATION,KEY_OUTGO_SUFFIX),0)==2 && checkItemTime(i, 2, KEY_OUTGO_SUFFIX)) {
-                info = getFinInfo(i);
+                info = getFinInfo(i,KEY_OUTGO_SUFFIX);
                 if (info != null)
                     result.add(info);
             }
@@ -431,7 +416,7 @@ public class PeriodFinancialInformationPrefs {
         FinancialInformation info = new FinancialInformation();
         for(int i= maxIncomingId; i >0 ; i --){
             if(sharedPreferences.getInt(getKeyField(i,KEY_DURATION,KEY_INCOME_SUFFIX),0)==3 && checkItemTime(i,3,KEY_INCOME_SUFFIX)) {
-                info = getFinInfo(i);
+                info = getFinInfo(i,KEY_INCOME_SUFFIX);
                 if (info != null)
                     result.add(info);
             }
@@ -440,7 +425,7 @@ public class PeriodFinancialInformationPrefs {
         int maxOutgoingId = currentStatusPrefs.getMaxIdOutgo();
         for(int i= maxOutgoingId; i >0 ; i --){
             if(sharedPreferences.getInt(getKeyField(i,KEY_DURATION,KEY_OUTGO_SUFFIX),0)==3 && checkItemTime(i, 3, KEY_OUTGO_SUFFIX)) {
-                info = getFinInfo(i);
+                info = getFinInfo(i,KEY_OUTGO_SUFFIX);
                 if (info != null)
                     result.add(info);
             }
@@ -458,7 +443,7 @@ public class PeriodFinancialInformationPrefs {
             if(durationType == 1)
                 return true;
 
-            if(durationType == 2  && (currentDate - currentChosenDate)%7 == 0)
+            if(durationType == 2  && changeFormatDateService.calculateDaysToCurrentDate(String.valueOf(currentChosenDate))%7 == 0)
                 return true;
 
             if(durationType == 3){
@@ -487,6 +472,9 @@ public class PeriodFinancialInformationPrefs {
         String stringDate = String.valueOf(date);
         return Integer.parseInt(stringDate.substring(0,4));
     }
+
+    private static final ArrayList<Integer> thirtyDayMonth = new ArrayList<>(Arrays.asList(4,6,9,11));
+    private static final ArrayList<Integer> thirtyOneDayMonth = new ArrayList<>(Arrays.asList(1,3,5,7,8,10, 12 ));
 
     private boolean checkLastDayOfMonth(int date){
         if( (thirtyOneDayMonth.contains(getMonthFromString(date)) && getDateFromString(date) == 31)

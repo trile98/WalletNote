@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_toolbar_title">Cài Đặt</string>
+
+    <string name="setting_service_check_title">Dịch vụ đang hoạt động</string>
+
+</resources>

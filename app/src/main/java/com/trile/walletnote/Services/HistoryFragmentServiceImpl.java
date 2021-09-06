@@ -104,7 +104,7 @@ public class HistoryFragmentServiceImpl implements HistoryFragmentService{
     public ReturnData deleteFinancialInformations(ArrayList<Integer> listId) {
         String stringListId = listId.toString().replace('[',' ').replace(']',' ');
 
-        return historyDao.deleteFinancialInformations(stringListId);
+        return historyDao.deleteFinancialInformation(stringListId);
     }
 
 

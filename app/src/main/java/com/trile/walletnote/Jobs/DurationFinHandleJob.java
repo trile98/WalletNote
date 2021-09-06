@@ -54,10 +54,6 @@ public class DurationFinHandleJob extends Service {
 
     private void runBackground(){
 
-        Notification notification = new NotificationCompat.Builder(this,CHANNEL_ID)
-                .setContentTitle(getString(R.string.master_job_notification_title))
-                .setContentText(getString(R.string.master_job_notification_content))
-                .build();
 
         ArrayList<FinancialInformation> infoList = new ArrayList<>();
         infoList.addAll(periodFinancialInformationPrefs.getListDailyFI());
@@ -68,7 +64,6 @@ public class DurationFinHandleJob extends Service {
         for (FinancialInformation info : infoList){
             addNewFinancialInfo(info);
         }
-        startForeground(1,notification);
         super.onDestroy();
     }
 

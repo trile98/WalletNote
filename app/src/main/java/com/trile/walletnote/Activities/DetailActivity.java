@@ -534,6 +534,6 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //do not thing
+        //do nothing
     }
 }

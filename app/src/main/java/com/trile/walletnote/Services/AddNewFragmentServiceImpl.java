@@ -75,10 +75,10 @@ public class AddNewFragmentServiceImpl implements AddNewFragmentService {
                 }
 //                    add period
                 else if(durationType.equals("period")){
-                    boolean checkFirstTimeAdd = periodFinancialInformationPrefs.checkPrefsEmpty();
+                    boolean checkPrefsEmptyVal = periodFinancialInformationPrefs.checkPrefsEmpty();
                     returnData = addNewDao.savePeriodFinInfo(FinList,addNewType);
 
-                    if(checkFirstTimeAdd){ // start master service
+                    if(checkPrefsEmptyVal){ // start master service
                         Intent intentService = new Intent(context, MasterJob.class);
                         context.startService(intentService);
                     }

@@ -2,6 +2,7 @@ package com.trile.walletnote.ui.home;
 
 import android.app.Activity;
 import android.app.job.JobInfo;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -18,6 +19,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.trile.walletnote.Activities.MainActivity;
+import com.trile.walletnote.Activities.SettingActivity;
+import com.trile.walletnote.Services.ChangeFormatDateService;
+import com.trile.walletnote.Services.ChangeFormatDateServiceImpl;
 import com.trile.walletnote.Services.HandleMoneyFormat;
 import com.trile.walletnote.Services.HandleMoneyFormatImpl;
 import com.trile.walletnote.Services.HomeFragmentService;
@@ -49,7 +53,7 @@ public class HomeFragment extends Fragment {
 
     CurrentStatusPrefs currentStatusPrefs;
 
-    ImageButton incomingInfoBtn, outgoingInfoBtn, historyDirectBtn;
+    ImageButton incomingInfoBtn, outgoingInfoBtn, historyDirectBtn, settingBtn;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -80,6 +84,7 @@ public class HomeFragment extends Fragment {
         incomingInfoBtn = rootView.findViewById(R.id.home_periodic_incoming_info_btn);
         outgoingInfoBtn = rootView.findViewById(R.id.home_periodic_outgoing_info_btn);
         historyDirectBtn = rootView.findViewById(R.id.home_history_direct_img_btn);
+        settingBtn = rootView.findViewById(R.id.home_setting_imgbtn);
 
         LinearLayout homeHistoryLay = rootView.findViewById(R.id.home_history_layout);
         ListView homeHistory = rootView.findViewById(R.id.home_recent_history_listview);
@@ -135,6 +140,10 @@ public class HomeFragment extends Fragment {
 
         setUpBtns();
 
+        ChangeFormatDateService changeFormatDateService = new ChangeFormatDateServiceImpl(rootView.getContext());
+
+        int a = changeFormatDateService.calculateDaysToCurrentDate("20210808");
+
     }
 
     void setUpBtns(){
@@ -158,6 +167,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity()).replaceFragment(R.id.navigation_history);
+            }
+        });
+
+        settingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent settingIntent = new Intent(rootView.getContext(), SettingActivity.class);
+                rootView.getContext().startActivity(settingIntent);
             }
         });
     }
