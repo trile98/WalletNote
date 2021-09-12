@@ -159,7 +159,7 @@ public class AddNewAdapter extends BaseAdapter {
             }
 
             //fill data
-            ViewHolder holder = (ViewHolder) rowView.getTag();
+            final ViewHolder holder = (ViewHolder) rowView.getTag();
             FinancialInformation FinInfo = FinList.get(position);
 
             holder.reasonSpinner.setAdapter(ReasonSpinnerValueAdapter);
@@ -175,7 +175,7 @@ public class AddNewAdapter extends BaseAdapter {
             holder.dateTxtView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    customDialog.datePickDialog(holder.dateTxtView);
+                    customDialog.datePickDialog(holder.dateTxtView, FinInfo);
                 }
             });
 
@@ -311,7 +311,7 @@ public class AddNewAdapter extends BaseAdapter {
         h.itemCheckLayout.requestLayout();
     }
 
-    void updateListAfterTextChange(ViewHolder holder, int pos){
+    void updateListAfterTextChange(final ViewHolder holder, final int pos){
         holder.reasonSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int reasonItemSelectPosition, long id) {
@@ -374,25 +374,26 @@ public class AddNewAdapter extends BaseAdapter {
             }
         });
 
-        holder.dateTxtView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(pos<FinList.size()) {
-                    String text = holder.dateTxtView.getText().toString();
-                    FinList.get(pos).setChosenDate(text);
-                }
-            }
-        });
+//        holder.dateTxtView.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if(pos<FinList.size()) {
+//                    String text = holder.dateTxtView.getText().toString();
+//                    FinList.get(pos).setChosenDate(text);
+//                }
+//            }
+//        });
     }
 
 

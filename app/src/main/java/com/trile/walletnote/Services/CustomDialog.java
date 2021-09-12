@@ -5,11 +5,12 @@ import android.content.Intent;
 import android.widget.TextView;
 
 import com.trile.walletnote.Activities.MainActivity;
+import com.trile.walletnote.model.FinancialInformation;
 
 public interface CustomDialog {
     void warningDialog(String message);
 
-    void datePickDialog(TextView masterView);
+    void datePickDialog(TextView masterView, FinancialInformation item);
 
 
     void totalDialog(String totalString);

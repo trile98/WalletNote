@@ -228,7 +228,7 @@ public class DetailActivity extends AppCompatActivity {
         dateTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                customDialog.datePickDialog(dateTxt);
+                customDialog.datePickDialog(dateTxt, info);
             }
         });
 

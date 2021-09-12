@@ -15,7 +15,9 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.trile.walletnote.Activities.MainActivity;
 import com.trile.walletnote.R;
+import com.trile.walletnote.model.FinancialInformation;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -56,23 +58,39 @@ public class CustomDialogImpl implements CustomDialog{
     }
 
     @Override
-    public void datePickDialog(TextView masterView) {
+    public void datePickDialog(final TextView masterView, FinancialInformation item) {
         Calendar calendar = Calendar.getInstance();
 
-        int date = calendar.get(Calendar.DATE);
-        int month = calendar.get(Calendar.MONTH);
-        int year = calendar.get(Calendar.YEAR);
+        int date, month, year;
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+
+        String currentDateTxtValue = masterView.getText().toString();
+
+        if(currentDateTxtValue != null) {
+            try {
+                calendar.setTime(format.parse(currentDateTxtValue));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        date = calendar.get(Calendar.DATE);
+        month = calendar.get(Calendar.MONTH);
+        year = calendar.get(Calendar.YEAR);
 
         DatePickerDialog datePicker = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 calendar.set(year,month,dayOfMonth);
 
-                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
                 masterView.setText(format.format(calendar.getTime()));
+
+                item.setChosenDate(format.format(calendar.getTime()));
             }
         },year,month,date);
+
 
         datePicker.show();
     }
