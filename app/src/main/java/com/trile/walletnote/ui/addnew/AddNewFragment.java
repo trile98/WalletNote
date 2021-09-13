@@ -41,7 +41,7 @@ import com.trile.walletnote.R;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
-public class AddNewFragment extends Fragment {
+public class AddNewFragment extends Fragment{
 
     private AddNewViewModel mViewModel;
     private View rootView;
@@ -247,11 +247,11 @@ public class AddNewFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(resultCode == Activity.RESULT_OK) {
+        if(resultCode == Activity.RESULT_OK&& requestCode == 0) {
+            int pos = adapter.currentImagePosition;
             super.onActivityResult(requestCode, resultCode, data);
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            int pos = data.getExtras().getInt("position");
-
+            Log.e("imgPos",pos+"");
             //add to object
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG,0,stream);
@@ -259,7 +259,6 @@ public class AddNewFragment extends Fragment {
 
             FinList.get(pos).getDetail().setFinDetImage(imgArray);
 
-            adapter.currentImgView.setImageBitmap(bitmap);
             adapter.notifyDataSetChanged();
         }
     }

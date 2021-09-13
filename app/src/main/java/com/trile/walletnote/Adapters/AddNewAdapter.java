@@ -1,16 +1,21 @@
 package com.trile.walletnote.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,6 +27,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 
 import com.trile.walletnote.R;
@@ -59,7 +65,7 @@ public class AddNewAdapter extends BaseAdapter {
     HandleMoneyFormat moneyFormat;
 
     public EditText currentAmountEditTxt, currentDetailEditTxt;
-    public ImageView currentImgView;
+    public int currentImagePosition;
 
     public ArrayList<Integer> listAmountForCheckEmpty;
 
@@ -115,52 +121,64 @@ public class AddNewAdapter extends BaseAdapter {
         EditText amountEditTxt, detailEditTxt;
         AppCompatCheckBox checkBox;
         RelativeLayout parentLay, itemCheckLayout;
-        LinearLayout headerLay,bodyLay, imageLayout;
-        AppCompatImageButton imageBtn;
-        ImageView imgView;
+        LinearLayout headerLay,bodyLay, imageLayout, mainLay;
+        AppCompatImageButton imageBtn, imagedeleteBtn;
+        AppCompatImageView imgView;
     }
 
     //if notifyDataChange run, list view will load again and this function is called from beginning
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View rowView = convertView;
         String durationStatus = currentStatusPrefs.getDurationStatus();
 
+        final ViewHolder holder;
             //get view
-            if (rowView == null) {
+            if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                rowView = inflater.inflate(layout, null);
+                convertView = inflater.inflate(layout, null);
 
-                ViewHolder viewHolder = new ViewHolder();
+                holder = new ViewHolder();
 
-                viewHolder.reasonSpinner = rowView.findViewById(R.id.addNew_reason_spinner);
-                viewHolder.durationSprinner = rowView.findViewById(R.id.addNew_duration_spinner);
-                viewHolder.dateTxtView = rowView.findViewById(R.id.addNew_date_txt);
-                viewHolder.amountEditTxt = rowView.findViewById(R.id.addNew_amount_editTxt);
-                viewHolder.detailEditTxt = rowView.findViewById(R.id.addNew_detail_editTxt);
-                viewHolder.bodyLay = rowView.findViewById(R.id.addNew_item_body_layout);
-                viewHolder.headerLay = rowView.findViewById(R.id.addNew_item_header_layout);
-                viewHolder.parentLay = rowView.findViewById(R.id.addNew_item_layout);
-                viewHolder.imageLayout = rowView.findViewById(R.id.addnew_image_layout);
-                viewHolder.imageBtn = rowView.findViewById(R.id.addNew_detail_img_btn);
-                viewHolder.imgView = rowView.findViewById(R.id.addnew_image_result);
+                holder.reasonSpinner = convertView.findViewById(R.id.addNew_reason_spinner);
+                holder.durationSprinner = convertView.findViewById(R.id.addNew_duration_spinner);
+                holder.dateTxtView = convertView.findViewById(R.id.addNew_date_txt);
+                holder.amountEditTxt = convertView.findViewById(R.id.addNew_amount_editTxt);
+                holder.detailEditTxt = convertView.findViewById(R.id.addNew_detail_editTxt);
+                holder.bodyLay = convertView.findViewById(R.id.addNew_item_body_layout);
+                holder.headerLay = convertView.findViewById(R.id.addNew_item_header_layout);
+                holder.parentLay = convertView.findViewById(R.id.addNew_item_layout);
+                holder.imageLayout = convertView.findViewById(R.id.addnew_image_layout);
+                holder.imageBtn = convertView.findViewById(R.id.addNew_detail_img_btn);
+                holder.imagedeleteBtn = convertView.findViewById(R.id.addnew_detail_img_delete);
+                holder.imgView = (AppCompatImageView) convertView.findViewById(R.id.addnew_image_result);
+                holder.mainLay = convertView.findViewById(R.id.addNew_listview_item_layout);
 
-                viewHolder.itemCheckLayout = rowView.findViewById(R.id.addnew_listview_item_check_layout);
-                viewHolder.checkBox = rowView.findViewById(R.id.addnew_listview_item_checkbox);
+                holder.itemCheckLayout = convertView.findViewById(R.id.addnew_listview_item_check_layout);
+                holder.checkBox = convertView.findViewById(R.id.addnew_listview_item_checkbox);
 
                 // set duration spinner visible
 
                 if (durationStatus.equals("normal")) {
-                    viewHolder.bodyLay.removeView(viewHolder.durationSprinner);
+                    holder.bodyLay.removeView(holder.durationSprinner);
                 }else{
-                    viewHolder.bodyLay.removeView(viewHolder.imageLayout);
+                    holder.bodyLay.removeView(holder.imageLayout);
                 }
-                rowView.setTag(viewHolder);
+
+                convertView.setTag(holder);
+            }else{
+                holder = (ViewHolder) convertView.getTag();
             }
 
             //fill data
-            final ViewHolder holder = (ViewHolder) rowView.getTag();
             FinancialInformation FinInfo = FinList.get(position);
+
+            int height = holder.mainLay.getHeight();
+            ViewGroup.LayoutParams params = holder.itemCheckLayout.getLayoutParams();
+            params.height = height;
+
+            holder.itemCheckLayout.setLayoutParams(params);
+
+            convertView.requestLayout();
 
             holder.reasonSpinner.setAdapter(ReasonSpinnerValueAdapter);
             holder.durationSprinner.setAdapter(DurationSpinnerValueAdapter);
@@ -187,56 +205,50 @@ public class AddNewAdapter extends BaseAdapter {
                 holder.detailEditTxt.setText("");
             }
 
+            holder.imgView.setTag(FinInfo);
+            holder.imgView.setId(position);
+            if(FinInfo.getDetail().getFinDetImage()!= null){
+
+                byte[] arrayImg = FinInfo.getDetail().getFinDetImage();
+                Bitmap bitmapImg = BitmapFactory.decodeByteArray(arrayImg,0,arrayImg.length);
+                holder.imgView.setImageBitmap(bitmapImg);
+                updateCheckLayoutHeight(holder,convertView);
+            }else{
+                holder.imgView.setImageBitmap(null);
+            }
+
             holder.imageBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    currentImgView = holder.imgView;
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    intent.putExtra("position",position);
-                    currentFragment.startActivityForResult(intent,0);
+                    currentImagePosition = position;
+
+                    currentFragment.startActivityForResult(intent, 0);
                 }
             });
 
-            if (checkboxMode == true) {
-                holder.itemCheckLayout.setVisibility(View.VISIBLE);
-
-
-                holder.checkBox.setSelected(FinInfo.isSelectValue());
-                holder.checkBox.setTag(FinInfo);
-
-                holder.itemCheckLayout.setOnClickListener(new View.OnClickListener() {
+            holder.imagedeleteBtn.setOnClickListener(new View.OnClickListener(){
                     @Override
-                    public void onClick(View v) {
-                        if (holder.checkBox.isChecked()) {
-                            holder.checkBox.setChecked(false);
-                        } else {
-                            holder.checkBox.setChecked(true);
-                        }
-                    }
-                });
-
-                holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (position != ListView.INVALID_POSITION) {
-                            FinInfo.setSelectValue(isChecked);
-                            if (isChecked) {
-//                                holder.itemCheckLayout.setBackgroundColor(Color.parseColor("#A6D3D3D3"));
-                                listFinListItemChecked.add(FinInfo);
-                            } else {
-//                                holder.itemCheckLayout.setBackgroundColor(Color.TRANSPARENT);
-                                if(listFinListItemChecked.contains(FinInfo))
-                                    listFinListItemChecked.remove(FinInfo);
-                            }
+                    public void onClick(View view) {
+                        if(holder.imgView.getDrawable()!= null){
+                            holder.imgView.setImageBitmap(null);
+                            FinInfo.getDetail().setFinDetImage(null);
                             notifyDataSetChanged();
                         }
                     }
                 });
 
+            if (checkboxMode == true) {
+                holder.itemCheckLayout.setVisibility(View.VISIBLE);
             } else {
                 FinInfo.setSelectValue(false);
                 holder.itemCheckLayout.setVisibility(View.INVISIBLE);
             }
+
+            holder.checkBox.setTag(FinInfo);
+            holder.checkBox.setId(position);
+
+            holder.checkBox.setChecked(FinInfo.isSelectValue());
 
             if (durationStatus.equals("period")) {
                 int selectedIndexDuration = DurationSpinnerListValue.indexOf(durationPrefs.getContentForShowing(FinInfo.getDurationType()));
@@ -256,62 +268,30 @@ public class AddNewAdapter extends BaseAdapter {
                 });
             }
 
-            if(holder.imgView.getDrawable()!= null)
-                updateCheckLayoutHeight(holder);
+            updateListAfterTextChange(holder, position, convertView);
 
-            updateListAfterTextChange(holder, position);
-
-        return rowView;
+        return convertView;
     }
 
-
-//    void createItemCheckLayout(ViewHolder h){
+    void updateCheckLayoutHeight(ViewHolder h, View rowView){
 //        int height = h.headerLay.getHeight() + h.bodyLay.getHeight()+10;
-//        RelativeLayout result = new RelativeLayout(this.context);
-//        result.setId(itemCheckLayId);
-//        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
+//        ViewGroup.LayoutParams params = h.itemCheckLayout.getLayoutParams();
 //
-//        //convert 15dp to px
-//        int marginSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,15f,context.getResources().getDisplayMetrics());
+//        params.height = height;
 //
-//        //just get px
-//        params.setMargins(marginSize,marginSize,marginSize,marginSize);
-//
-//        result.setLayoutParams(params);
-////        result.setBackgroundColor(Color.RED);
-//
-//        //convert 5dp to px
-//    //    int checkboxPaddingSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,5f,context.getResources().getDisplayMetrics());
-//
-////        result.setPadding(0,checkboxPaddingSize,0,0);
-//        result.setClickable(true);
-//        result.setFocusable(true);
-//
-//        AppCompatCheckBox checkBox = new AppCompatCheckBox(this.context);
-//        checkBox.setId(checkboxId);
-//        checkBox.setButtonDrawable(R.drawable.custom_checkbox);
-//        RelativeLayout.LayoutParams checkboxParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-//        checkboxParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-//        checkboxParams.addRule(RelativeLayout.ALIGN_PARENT_END);
-//        checkBox.setGravity(Gravity.TOP);
-//        checkBox.setLayoutParams(checkboxParams);
-//        result.addView(checkBox);
-//
-//
-//        h.parentLay.addView(result);
-//    }
+//        h.itemCheckLayout.setLayoutParams(params);
+//        h.itemCheckLayout.requestLayout();
 
-    void updateCheckLayoutHeight(ViewHolder h){
-        int height = h.headerLay.getHeight() + h.bodyLay.getHeight()+10;
+        int height = h.mainLay.getHeight();
         ViewGroup.LayoutParams params = h.itemCheckLayout.getLayoutParams();
-
         params.height = height;
 
         h.itemCheckLayout.setLayoutParams(params);
-        h.itemCheckLayout.requestLayout();
+
+        rowView.requestLayout();
     }
 
-    void updateListAfterTextChange(final ViewHolder holder, final int pos){
+    void updateListAfterTextChange(final ViewHolder holder, final int pos, View rowView){
         holder.reasonSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int reasonItemSelectPosition, long id) {
@@ -369,43 +349,49 @@ public class AddNewAdapter extends BaseAdapter {
                 if(!hasFocus) {
                     String text = holder.detailEditTxt.getText().toString();
                     FinList.get(pos).getDetail().setFinDetContent(text);
-                    updateCheckLayoutHeight(holder);
+                    updateCheckLayoutHeight(holder, rowView);
+                }
+            }
+        });
+
+        holder.itemCheckLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.checkBox.isChecked()) {
+                    holder.checkBox.setChecked(false);
+                } else {
+                    holder.checkBox.setChecked(true);
                 }
             }
         });
 
 
-//        holder.dateTxtView.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                if(pos<FinList.size()) {
-//                    String text = holder.dateTxtView.getText().toString();
-//                    FinList.get(pos).setChosenDate(text);
-//                }
-//            }
-//        });
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(buttonView.isShown()){
+                    if(pos != ListView.INVALID_POSITION) {
+                        FinancialInformation item = FinList.get(pos);
+                        item.setSelectValue(isChecked);
+                        if (isChecked) {
+//                            holder.checkBoxLayout.setBackgroundColor(Color.parseColor("#A6D3D3D3"));
+                            listFinListItemChecked.add(item);
+
+                            if(item.getDetail().getFinDetImage()!= null)
+                                Log.e("image","true"+ pos);
+
+                        } else {
+                            if (listFinListItemChecked.contains(item))
+                                listFinListItemChecked.remove(item.getID());
+                        }
+                    }
+                }
+            }
+        });
+
+
     }
 
-
-
-
-//    @Override
-//    public void notifyDataSetChanged() {
-//        super.notifyDataSetChanged();
-//
-//        if(checkboxCheck == false){
-//
-//        }
-//    }
 
 }

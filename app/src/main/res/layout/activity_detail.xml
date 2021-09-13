@@ -139,7 +139,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:id="@+id/detail_detail_img_btn"
-                                    android:src="@drawable/ic_addnew_camera"
+                                    android:src="@drawable/ic_addnew_camera_black"
                                     android:layout_gravity="center"
                                     android:layout_marginHorizontal="10dp"
                                     android:visibility="invisible"
