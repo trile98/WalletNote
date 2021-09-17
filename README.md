@@ -1,6 +1,8 @@
 # WalletNote
 An Android app for noting daily incoming and outgoing
 
+App is available on GooglePlay <a href="https://play.google.com/store/apps/details?id=com.trile.walletnote">Link</a>
+
 The home screen will show 5 recent records which are sorted by create date.
 
 <img src="https://github.com/trile98/WalletNote/blob/master/screenshot/screenshot_home.jpg"  height="400" />
